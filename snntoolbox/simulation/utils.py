@@ -578,7 +578,7 @@ class AbstractSNN:
                                    self.batch_size * (batch_idx + 1))
                 x_b_l = x_test[batch_idxs, :]
                 if y_test is not None:
-                    y_b_l = y_test[batch_idxs, :]
+                    y_b_l = y_test[batch_idxs]
             elif dataflow is not None:
                 x_b_l, y_b_l = dataflow.next()
             elif self._is_aedat_input:
@@ -596,7 +596,7 @@ class AbstractSNN:
             if len(x_b_l) < self.batch_size:
                 continue
 
-            truth_b = np.argmax(y_b_l, axis=1)
+            truth_b = np.copy(y_b_l)
 
             data_batch_kwargs['truth_b'] = truth_b
             data_batch_kwargs['x_b_l'] = x_b_l
